@@ -7,7 +7,7 @@ import json
 import logging
 
 logger = logging.getLogger(__name__)
-logging.basicConfig(filename="joke.log", encoding="utf-8")
+logging.basicConfig(filename="joke.log", encoding="utf-8", level=logging.INFO)
 
 url = "https://official-joke-api.appspot.com/random_joke"
 
@@ -17,7 +17,6 @@ try:
     status = response.status_code
     # check to see that we got a good 200-OK status from the request
     if (status == 200):
-        logging.info('Request successful')
         # put it into json format
         response = json.loads(response.text)
         # fetch each data point by key
@@ -28,10 +27,10 @@ try:
         logging.warning('%s:%s:%s', id, setup, punchline)
     # in case we got a bad status response
     else:
-        logging.error('Request failed: %s', status)
+        logging.info('Request failed: %s', status)
 except Exception as e:
     # log the error
-    logging.error(e)
+    logging.info(e)
 
 # Notes:
 # If you add a random character to the URL, you will force the "else" stanza to run.
